@@ -42,7 +42,9 @@ export function DishCard({ dish }: DishCardProps) {
           src={dish.imageUrl}
           alt={dish.dishName}
           fill
-          className="object-cover"
+          className={`object-cover transition-all duration-300 ${
+            !dish.isPublished ? "grayscale-[0.85] opacity-80" : ""
+          }`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
