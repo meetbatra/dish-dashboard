@@ -1,4 +1,5 @@
-import { query, internalMutation } from "./_generated/server";
+import { query, internalMutation, mutation } from "./_generated/server";
+import { v } from "convex/values";
 
 const initialDishes = [
   { dishId: "1", dishName: "Margherita Pizza", imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400", isPublished: true },
@@ -33,3 +34,21 @@ export const seedDishes = internalMutation({
     console.log("Successfully seeded dishes.");
   },
 });
+
+export const togglePublished = mutation({
+  args: {
+    id: v.id("dishes"),
+  },
+  handler: async (ctx, args) => {
+    const dish = await ctx.db.get(args.id);
+    if (!dish) {
+      throw new Error("Dish not found");
+    }
+    const nextPublished = !dish.isPublished;
+    await ctx.db.patch(args.id, {
+      isPublished: nextPublished,
+    });
+    return (await ctx.db.get(args.id))!;
+  },
+});
+
