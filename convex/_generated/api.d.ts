@@ -8,13 +8,17 @@
  * @module
  */
 
+import type * as dishes from "../dishes.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  dishes: typeof dishes;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.
