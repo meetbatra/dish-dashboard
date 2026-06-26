@@ -1,5 +1,7 @@
 # 🍽️ Dish Dashboard
 
+**Live Demo:** [https://dish-dashboard-chi.vercel.app](https://dish-dashboard-chi.vercel.app)
+
 A modern, real-time web application for managing restaurant dishes. Built with **Next.js 16**, **Convex**, and styled with **Tailwind CSS v4** & **shadcn/ui**.
 
 ## ✨ Features
