@@ -71,3 +71,73 @@ This project is configured for seamless deployment on Vercel with Convex.
 
 ## 📸 Real-time Demo
 Because the app relies on Convex subscriptions (`useQuery`), if you open the deployed application in two separate browser windows (or devices) and toggle a dish in one, you will see it immediately update in the other.
+
+## 🔌 HTTP API Endpoints
+
+You can also interact with the dashboard programmatically without using the frontend! We have exposed REST API endpoints directly within the Next.js application that securely forward requests to Convex.
+
+### 1. Fetch All Dishes
+
+Retrieve a list of all dishes currently in the database, including their publish status and IDs.
+
+**Endpoint:** `GET https://dish-dashboard-chi.vercel.app/api/dish`
+
+*(For local development, use `http://localhost:3000/api/dish`)*
+
+**Example using `curl`:**
+```bash
+curl https://dish-dashboard-chi.vercel.app/api/dish
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "dishes": [
+    {
+      "_id": "j573xfdy0y0bbep5tbcw3eb5r18990dm",
+      "dishId": "1",
+      "dishName": "Jeera Rice",
+      "isPublished": false
+    },
+    ...
+  ]
+}
+```
+*(Note: `_id` is the Convex database ID used for toggling, while `dishId` is the custom assignment ID).*
+
+---
+
+### 2. Toggle Dish Status
+
+Toggle the published status of a specific dish using its Convex `_id`.
+
+**Endpoint:** `POST https://dish-dashboard-chi.vercel.app/api/dish`
+
+*(For local development, use `http://localhost:3000/api/dish`)*
+
+**Request Body (JSON):**
+```json
+{
+  "id": "<dish_id_here>"
+}
+```
+
+**Example using `curl`:**
+```bash
+curl -X POST https://dish-dashboard-chi.vercel.app/api/dish \
+  -H "Content-Type: application/json" \
+  -d '{"id": "j573xfdy0y0bbep5tbcw3eb5r18990dm"}'
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "dish": {
+    "_id": "j573xfdy0y0bbep5tbcw3eb5r18990dm",
+    "dishName": "Jeera Rice",
+    "isPublished": false
+  }
+}
+```
