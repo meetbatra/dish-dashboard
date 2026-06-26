@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍽️ Dish Dashboard
 
-## Getting Started
+A modern, real-time web application for managing restaurant dishes. Built with **Next.js 16**, **Convex**, and styled with **Tailwind CSS v4** & **shadcn/ui**.
 
-First, run the development server:
+## ✨ Features
 
+- **Real-Time Data Sync**: Powered by Convex, changes to dish statuses are instantly synchronized across all connected clients. No manual refreshing required!
+- **Optimistic UI Updates**: Toggle a dish's published status and see the UI update instantly (zero-latency) using Convex's `.withOptimisticUpdate` API.
+- **Digital Gallery Aesthetic**: A clean, premium UI design featuring `Playfair Display` for elegant headers and `Inter` for highly readable UI elements.
+- **Dynamic Visual Feedback**: Unpublished dishes gracefully transition into an 85% grayscale, slightly faded state to visually indicate their inactive status.
+- **Responsive Grid**: Fluidly adapts from mobile to ultra-wide desktop screens.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Database & Realtime Backend**: [Convex](https://convex.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Fonts**: Google Fonts (Playfair Display, Inter) via `next/font`
+
+## 🚀 Getting Started Locally
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm, yarn, pnpm, or bun
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/meetbatra/dish-dashboard.git
+cd dish-dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Setup Convex Environment
+Convex handles the backend and database. To initialize it for your local environment:
+```bash
+npx convex dev
+```
+*This command will prompt you to log in to Convex (if you haven't already) and create a new project. It will automatically configure your `.env.local` file with the necessary `CONVEX_DEPLOYMENT` and `NEXT_PUBLIC_CONVEX_URL` variables. Leave this command running in a separate terminal tab.*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Seed the Database
+To populate the database with the initial sample dishes from the assignment:
+```bash
+npx convex run dishes:clearAndSeed
+```
 
-## Learn More
+### 5. Start the Next.js Development Server
+In a new terminal window, run:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Deploying to Production (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is configured for seamless deployment on Vercel with Convex.
 
-## Deploy on Vercel
+1. Push your code to a GitHub repository.
+2. Import the project into Vercel.
+3. **Critical Step**: Follow the [Convex Vercel Deployment Guide](https://docs.convex.dev/production/hosting/vercel). 
+   - Add your `CONVEX_DEPLOY_KEY` to Vercel's Environment Variables (you can generate this via `npx convex deploy`).
+   - Override the Vercel Build Command to: `npx convex deploy --cmd 'npm run build'`
+4. Deploy!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Real-time Demo
+Because the app relies on Convex subscriptions (`useQuery`), if you open the deployed application in two separate browser windows (or devices) and toggle a dish in one, you will see it immediately update in the other.
